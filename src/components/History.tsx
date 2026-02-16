@@ -68,12 +68,18 @@ const faqs = [
 
 export default function History() {
     return (
-        <section class="relative bg-stone-50 dark:bg-slate-900 py-24 sm:py-32 px-4 transition-colors duration-500">
+        <section
+            aria-labelledby="history-heading"
+            class="relative bg-stone-50 dark:bg-slate-900 py-24 sm:py-32 px-4 transition-colors duration-500"
+        >
             <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-emerald-400/50 dark:via-emerald-500/50 to-transparent" />
 
             <div class="mx-auto max-w-6xl">
                 <div class="text-center mb-20">
-                    <h2 class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+                    <h2
+                        id="history-heading"
+                        class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4"
+                    >
                         This isn't new
                     </h2>
                     <p class="max-w-2xl mx-auto text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -82,13 +88,22 @@ export default function History() {
                     </p>
                 </div>
 
-                <div class="relative mb-32">
-                    <div class="absolute left-4 sm:left-1/2 top-0 bottom-0 w-px bg-linear-to-b from-amber-400/50 dark:from-amber-500/50 via-indigo-400/30 dark:via-indigo-500/30 to-transparent sm:-translate-x-px" />
+                <div
+                    class="relative mb-32"
+                    role="list"
+                    aria-label="Timeline of calendar reform"
+                >
+                    <div
+                        class="absolute left-4 sm:left-1/2 top-0 bottom-0 w-px bg-linear-to-b from-amber-400/50 dark:from-amber-500/50 via-indigo-400/30 dark:via-indigo-500/30 to-transparent sm:-translate-x-px"
+                        aria-hidden="true"
+                    />
 
                     <div class="space-y-12">
                         <For each={timeline}>
                             {(event, i) => (
                                 <div
+                                    role="listitem"
+                                    aria-label={`${event.year}: ${event.title}`}
                                     class={`relative flex flex-col sm:flex-row items-start gap-6 sm:gap-12 ${
                                         i() % 2 === 0
                                             ? "sm:flex-row"
@@ -121,7 +136,10 @@ export default function History() {
                                         </div>
                                     </div>
 
-                                    <div class="absolute left-4 sm:left-1/2 top-6 sm:top-8 -translate-x-1/2 flex items-center justify-center">
+                                    <div
+                                        class="absolute left-4 sm:left-1/2 top-6 sm:top-8 -translate-x-1/2 flex items-center justify-center"
+                                        aria-hidden="true"
+                                    >
                                         <div class="w-3 h-3 rounded-full bg-stone-50 dark:bg-slate-900 border-2 border-amber-400 dark:border-amber-500/60 ring-4 ring-stone-50 dark:ring-slate-900" />
                                     </div>
 
@@ -133,17 +151,30 @@ export default function History() {
                 </div>
 
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+                    <h2
+                        id="faq-heading"
+                        class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4"
+                    >
                         Yeah, but...
                     </h2>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto"
+                    role="list"
+                    aria-labelledby="faq-heading"
+                >
                     <For each={faqs}>
                         {(faq) => (
-                            <div class="rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-6 hover:border-indigo-300 dark:hover:border-indigo-500/20 transition-colors">
+                            <div
+                                role="listitem"
+                                class="rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-6 hover:border-indigo-300 dark:hover:border-indigo-500/20 transition-colors"
+                            >
                                 <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-3 flex items-start gap-3">
-                                    <span class="shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 text-xs font-bold mt-0.5">
+                                    <span
+                                        class="shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 text-xs font-bold mt-0.5"
+                                        aria-hidden="true"
+                                    >
                                         ?
                                     </span>
                                     {faq.question}
@@ -156,7 +187,10 @@ export default function History() {
                     </For>
                 </div>
 
-                <div class="mt-20 mx-auto max-w-3xl rounded-2xl border border-amber-200 dark:border-amber-500/20 bg-amber-50 dark:bg-amber-500/3 p-8 sm:p-10 text-center transition-colors duration-500">
+                <aside
+                    aria-label="Key fact: Kodak's 61-year use of the calendar"
+                    class="mt-20 mx-auto max-w-3xl rounded-2xl border border-amber-200 dark:border-amber-500/20 bg-amber-50 dark:bg-amber-500/3 p-8 sm:p-10 text-center transition-colors duration-500"
+                >
                     <h3 class="text-xl font-bold text-amber-700 dark:text-amber-200 mb-3">
                         Kodak used this for 61 years
                     </h3>
@@ -167,7 +201,7 @@ export default function History() {
                         worked. They only dropped it because nobody else was
                         using it.
                     </p>
-                </div>
+                </aside>
             </div>
         </section>
     );

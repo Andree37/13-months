@@ -46,6 +46,29 @@ body {
     background: #334155;
 }
 
+/* Focus-visible — keyboard accessibility */
+*:focus-visible {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.dark *:focus-visible {
+    outline-color: #818cf8;
+}
+
+/* Remove default focus ring for mouse users */
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Interactive elements — smooth focus transition */
+a:focus-visible,
+button:focus-visible {
+    transition: outline-offset 0.15s ease;
+    outline-offset: 3px;
+}
+
 /* Selection color */
 ::selection {
     background-color: rgba(99, 102, 241, 0.3);

@@ -9,41 +9,30 @@ import {
 export default function Hero() {
     const [now, setNow] = createSignal(new Date());
 
-    const interval = setInterval(() => setNow(new Date()), 1000);
+    // Update every 60s — only the date matters, not the seconds
+    const interval = setInterval(() => setNow(new Date()), 60_000);
     onCleanup(() => clearInterval(interval));
 
     const ifcDate = () => toIFC(now());
     const ifcFormatted = () => formatIFC(ifcDate());
     const gregorianFormatted = () => formatGregorian(now());
 
-    const timeString = () =>
-        now().toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: false,
-        });
-
     return (
-        <section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-linear-to-b from-stone-100 via-stone-50 to-stone-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-white px-4 transition-colors duration-500">
-            <div class="absolute top-1/4 -left-32 w-96 h-96 bg-indigo-400/10 dark:bg-indigo-600/20 rounded-full blur-3xl pointer-events-none" />
-            <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-violet-400/10 dark:bg-violet-600/20 rounded-full blur-3xl pointer-events-none" />
-
-            <div class="relative z-10 mb-8">
+        <section
+            aria-label="Today's date in the International Fixed Calendar"
+            class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-linear-to-b from-stone-100 via-stone-50 to-stone-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-white px-4 transition-colors duration-500"
+        >
+            <div class="mb-8">
                 <span class="inline-flex items-center gap-2 rounded-full border border-stone-200 dark:border-white/10 bg-stone-200 dark:bg-white/5 px-4 py-1.5 text-sm text-slate-500 dark:text-slate-300 backdrop-blur-sm">
-                    <span class="relative flex h-2 w-2">
+                    <span class="relative flex h-2 w-2" aria-hidden="true">
                         <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                         <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                     </span>
-                    Live — Right now
+                    The International Fixed Calendar
                 </span>
             </div>
 
-            <p class="relative z-10 text-sm text-slate-400 dark:text-slate-400 mb-2 tracking-wide uppercase">
-                Gregorian: {gregorianFormatted()}
-            </p>
-
-            <h1 class="relative z-10 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-center leading-none mb-4">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-center leading-none mb-6">
                 {ifcDate().isYearDay || ifcDate().isLeapDay ? (
                     <span class="bg-linear-to-r from-amber-500 via-orange-500 to-rose-500 dark:from-amber-400 dark:via-orange-400 dark:to-rose-400 bg-clip-text text-transparent">
                         {ifcFormatted()}
@@ -64,23 +53,26 @@ export default function Hero() {
                 )}
             </h1>
 
-            <p class="relative z-10 font-mono text-2xl sm:text-3xl text-slate-400 dark:text-slate-500 mb-10 tabular-nums">
-                {timeString()}
+            <p class="text-base sm:text-lg text-slate-400 dark:text-slate-500 mb-10 text-center">
+                Today is{" "}
+                <span class="text-slate-600 dark:text-slate-300">
+                    {gregorianFormatted()}
+                </span>
+                . Same day, different system.
             </p>
 
-            <p class="relative z-10 max-w-xl text-center text-lg sm:text-xl text-slate-500 dark:text-slate-400 leading-relaxed mb-12">
-                Today's date, if we used the{" "}
+            <p class="max-w-xl text-center text-lg sm:text-xl text-slate-500 dark:text-slate-400 leading-relaxed mb-12">
                 <span class="text-slate-900 dark:text-white font-semibold">
-                    13-month calendar
-                </span>
-                .
+                    13 equal months. 28 days each.
+                </span>{" "}
+                Every month starts on Sunday. Every month ends on Saturday.
                 <br />
                 <span class="text-slate-400 dark:text-slate-500">
-                    13 equal months. 28 days each. Every month identical.
+                    The calendar that almost replaced the one you use today.
                 </span>
             </p>
 
-            <div class="relative z-10 flex flex-col sm:flex-row gap-4">
+            <div class="flex flex-col sm:flex-row gap-4">
                 <a
                     href="#why"
                     class="group inline-flex items-center justify-center gap-2 rounded-full bg-indigo-600 px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-indigo-500 hover:shadow-lg hover:shadow-indigo-500/25"
@@ -92,6 +84,7 @@ export default function Hero() {
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                         stroke-width={2}
+                        aria-hidden="true"
                     >
                         <path
                             stroke-linecap="round"
@@ -106,11 +99,6 @@ export default function Hero() {
                 >
                     View full calendar
                 </a>
-            </div>
-
-            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 dark:text-slate-600">
-                <span class="text-xs uppercase tracking-widest">Scroll</span>
-                <div class="w-px h-8 bg-linear-to-b from-slate-400 dark:from-slate-600 to-transparent" />
             </div>
         </section>
     );

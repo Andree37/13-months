@@ -27,6 +27,7 @@ export default function CalendarView() {
     return (
         <section
             id="calendar"
+            aria-labelledby="calendar-heading"
             class="relative bg-stone-50 dark:bg-slate-950 py-24 sm:py-32 px-4 transition-colors duration-500"
         >
             <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-violet-400/50 dark:via-violet-500/50 to-transparent" />
@@ -36,7 +37,10 @@ export default function CalendarView() {
                     <p class="text-sm font-semibold uppercase tracking-widest text-emerald-500 dark:text-emerald-400 mb-3 select-none">
                         Full Calendar
                     </p>
-                    <h2 class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+                    <h2
+                        id="calendar-heading"
+                        class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4"
+                    >
                         {year()} at a glance
                     </h2>
                     <p class="max-w-2xl mx-auto text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -49,7 +53,7 @@ export default function CalendarView() {
                     <button
                         onClick={() => setYear((y) => y - 1)}
                         class="flex items-center justify-center w-10 h-10 rounded-full border border-stone-200 dark:border-white/10 bg-stone-200 dark:bg-white/5 text-slate-600 dark:text-slate-300 transition-all hover:bg-stone-300 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white hover:border-stone-300 dark:hover:border-white/20"
-                        aria-label="Previous year"
+                        aria-label={`Previous year, ${year() - 1}`}
                     >
                         <svg
                             class="w-4 h-4"
@@ -57,6 +61,7 @@ export default function CalendarView() {
                             viewBox="0 0 24 24"
                             stroke="currentColor"
                             stroke-width={2}
+                            aria-hidden="true"
                         >
                             <path
                                 stroke-linecap="round"
@@ -66,14 +71,18 @@ export default function CalendarView() {
                         </svg>
                     </button>
 
-                    <span class="text-2xl font-bold text-slate-900 dark:text-white tabular-nums min-w-[5ch] text-center">
+                    <span
+                        class="text-2xl font-bold text-slate-900 dark:text-white tabular-nums min-w-[5ch] text-center"
+                        aria-live="polite"
+                        aria-atomic="true"
+                    >
                         {year()}
                     </span>
 
                     <button
                         onClick={() => setYear((y) => y + 1)}
                         class="flex items-center justify-center w-10 h-10 rounded-full border border-stone-200 dark:border-white/10 bg-stone-200 dark:bg-white/5 text-slate-600 dark:text-slate-300 transition-all hover:bg-stone-300 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white hover:border-stone-300 dark:hover:border-white/20"
-                        aria-label="Next year"
+                        aria-label={`Next year, ${year() + 1}`}
                     >
                         <svg
                             class="w-4 h-4"
@@ -81,6 +90,7 @@ export default function CalendarView() {
                             viewBox="0 0 24 24"
                             stroke="currentColor"
                             stroke-width={2}
+                            aria-hidden="true"
                         >
                             <path
                                 stroke-linecap="round"
@@ -94,16 +104,23 @@ export default function CalendarView() {
                         <button
                             onClick={() => setYear(currentYear)}
                             class="ml-2 rounded-full border border-indigo-300 dark:border-indigo-500/30 bg-indigo-50 dark:bg-indigo-500/10 px-4 py-1.5 text-xs font-medium text-indigo-600 dark:text-indigo-300 transition-all hover:bg-indigo-100 dark:hover:bg-indigo-500/20"
+                            aria-label={`Return to current year, ${currentYear}`}
                         >
                             Today
                         </button>
                     </Show>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+                    role="list"
+                    aria-label={`All 13 months of ${year()}`}
+                >
                     <For each={calendar().months}>
                         {(month) => (
                             <div
+                                role="listitem"
+                                aria-label={`${month.name}, month ${month.monthNumber}`}
                                 class={`rounded-2xl border p-5 transition-all duration-500 ${
                                     month.name === "Sol"
                                         ? "border-amber-300 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/4 shadow-lg shadow-amber-500/5"
@@ -125,17 +142,26 @@ export default function CalendarView() {
                                     </span>
                                 </div>
 
-                                <div class="grid grid-cols-7 gap-0.5 mb-1">
+                                <div
+                                    class="grid grid-cols-7 gap-0.5 mb-1"
+                                    role="row"
+                                >
                                     <For each={IFC_WEEKDAY_SHORT}>
                                         {(wd) => (
-                                            <div class="text-center text-[10px] font-medium text-slate-400 dark:text-slate-600 py-1">
+                                            <div
+                                                role="columnheader"
+                                                class="text-center text-[10px] font-medium text-slate-400 dark:text-slate-600 py-1"
+                                            >
                                                 {wd}
                                             </div>
                                         )}
                                     </For>
                                 </div>
 
-                                <div class="grid grid-cols-7 gap-0.5">
+                                <div
+                                    class="grid grid-cols-7 gap-0.5"
+                                    role="rowgroup"
+                                >
                                     <For each={month.days}>
                                         {(dayInfo) => {
                                             const today = isToday(
@@ -147,6 +173,7 @@ export default function CalendarView() {
                                                 dayInfo.weekday === 6;
                                             return (
                                                 <div
+                                                    role="cell"
                                                     class={`flex items-center justify-center rounded-md text-xs h-8 transition-colors ${
                                                         today
                                                             ? "bg-indigo-500 text-white font-bold shadow-md shadow-indigo-500/30 ring-2 ring-indigo-400/50"
@@ -154,7 +181,12 @@ export default function CalendarView() {
                                                               ? "text-slate-400 dark:text-slate-500 bg-stone-100 dark:bg-white/1"
                                                               : "text-slate-600 dark:text-slate-400 hover:bg-stone-200 dark:hover:bg-white/5"
                                                     }`}
-                                                    title={`${month.name} ${dayInfo.day}`}
+                                                    title={`${IFC_WEEKDAY_SHORT[dayInfo.weekday]}, ${month.name} ${dayInfo.day}${today ? " (today)" : ""}`}
+                                                    aria-current={
+                                                        today
+                                                            ? "date"
+                                                            : undefined
+                                                    }
                                                 >
                                                     {dayInfo.day}
                                                 </div>
@@ -166,7 +198,11 @@ export default function CalendarView() {
                         )}
                     </For>
 
-                    <div class="rounded-2xl border border-emerald-200 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/3 p-5 flex flex-col justify-center transition-colors duration-500">
+                    <div
+                        role="listitem"
+                        aria-label="Special days"
+                        class="rounded-2xl border border-emerald-200 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/3 p-5 flex flex-col justify-center transition-colors duration-500"
+                    >
                         <h3 class="text-lg font-semibold text-emerald-700 dark:text-emerald-300 mb-4">
                             Special Days
                         </h3>
