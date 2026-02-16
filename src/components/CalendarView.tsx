@@ -230,18 +230,18 @@ export default function CalendarView() {
                                 class={`rounded-xl border p-4 ${
                                     isLeapYear(year())
                                         ? "border-amber-200 dark:border-amber-500/20 bg-amber-50 dark:bg-amber-500/5"
-                                        : "border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 opacity-50"
+                                        : "border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-white/2"
                                 }`}
                             >
                                 <div class="flex items-center gap-3 mb-2">
                                     <div>
                                         <p
-                                            class={`font-semibold text-sm ${isLeapYear(year()) ? "text-amber-700 dark:text-amber-200" : "text-slate-400"}`}
+                                            class={`font-semibold text-sm ${isLeapYear(year()) ? "text-amber-700 dark:text-amber-200" : "text-slate-400 dark:text-slate-500"}`}
                                         >
                                             Leap Day
                                         </p>
                                         <p
-                                            class={`text-[10px] uppercase tracking-wider ${isLeapYear(year()) ? "text-amber-500/70" : "text-slate-400 dark:text-slate-600"}`}
+                                            class={`text-[10px] uppercase tracking-wider ${isLeapYear(year()) ? "text-amber-500/70" : "text-slate-400 dark:text-slate-500"}`}
                                         >
                                             {isLeapYear(year())
                                                 ? `${year()} is a leap year · After June 28`
@@ -249,7 +249,9 @@ export default function CalendarView() {
                                         </p>
                                     </div>
                                 </div>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                                <p
+                                    class={`text-xs leading-relaxed ${isLeapYear(year()) ? "text-slate-500 dark:text-slate-400" : "text-slate-400 dark:text-slate-500"}`}
+                                >
                                     An extra intercalary day added every 4 years
                                     between June and Sol. Also outside the
                                     weekly cycle.

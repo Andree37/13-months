@@ -9,13 +9,20 @@ import {
 export default function Hero() {
     const [now, setNow] = createSignal(new Date());
 
-    // Update every 60s — only the date matters, not the seconds
-    const interval = setInterval(() => setNow(new Date()), 60_000);
+    const interval = setInterval(() => setNow(new Date()), 1000);
     onCleanup(() => clearInterval(interval));
 
     const ifcDate = () => toIFC(now());
     const ifcFormatted = () => formatIFC(ifcDate());
     const gregorianFormatted = () => formatGregorian(now());
+
+    const timeString = () =>
+        now().toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+        });
 
     return (
         <section
@@ -54,11 +61,14 @@ export default function Hero() {
             </h1>
 
             <p class="text-base sm:text-lg text-slate-400 dark:text-slate-500 mb-10 text-center">
-                Today is{" "}
+                On your calendar, it's{" "}
                 <span class="text-slate-600 dark:text-slate-300">
                     {gregorianFormatted()}
                 </span>
-                . Same day, different system.
+            </p>
+
+            <p class="font-mono text-2xl sm:text-3xl text-slate-400 dark:text-slate-500 mb-10 tabular-nums">
+                {timeString()}
             </p>
 
             <p class="max-w-xl text-center text-lg sm:text-xl text-slate-500 dark:text-slate-400 leading-relaxed mb-12">
