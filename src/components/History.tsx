@@ -70,26 +70,26 @@ export default function History() {
     return (
         <section
             aria-labelledby="history-heading"
-            class="relative bg-stone-50 dark:bg-slate-900 py-16 sm:py-24 md:py-32 px-4 transition-colors duration-500"
+            class="relative bg-stone-50 dark:bg-slate-900 py-10 sm:py-24 md:py-32 px-4 transition-colors duration-500"
         >
             <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-emerald-400/50 dark:via-emerald-500/50 to-transparent" />
 
             <div class="mx-auto max-w-6xl">
-                <div class="text-center mb-12 sm:mb-20">
+                <div class="text-center mb-6 sm:mb-20">
                     <h2
                         id="history-heading"
-                        class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-3 sm:mb-4"
+                        class="text-xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2 sm:mb-4"
                     >
                         This isn't new
                     </h2>
-                    <p class="max-w-2xl mx-auto text-sm sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
+                    <p class="max-w-2xl mx-auto text-xs sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
                         People have been trying to fix the calendar for over a
                         century. It almost happened.
                     </p>
                 </div>
 
                 <div
-                    class="relative mb-16 sm:mb-32"
+                    class="relative mb-10 sm:mb-32"
                     role="list"
                     aria-label="Timeline of calendar reform"
                 >
@@ -98,13 +98,13 @@ export default function History() {
                         aria-hidden="true"
                     />
 
-                    <div class="space-y-12">
+                    <div class="space-y-4 sm:space-y-12">
                         <For each={timeline}>
                             {(event, i) => (
                                 <div
                                     role="listitem"
                                     aria-label={`${event.year}: ${event.title}`}
-                                    class={`relative flex flex-col sm:flex-row items-start gap-6 sm:gap-12 ${
+                                    class={`relative flex flex-col sm:flex-row items-start gap-3 sm:gap-12 ${
                                         i() % 2 === 0
                                             ? "sm:flex-row"
                                             : "sm:flex-row-reverse"
@@ -118,19 +118,19 @@ export default function History() {
                                         }`}
                                     >
                                         <div
-                                            class={`inline-block rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-6 text-left max-w-md transition-colors duration-500 ${
+                                            class={`inline-block rounded-xl sm:rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-3 sm:p-6 text-left max-w-md transition-colors duration-500 ${
                                                 i() % 2 === 0
                                                     ? "sm:ml-auto"
                                                     : "sm:mr-auto"
                                             }`}
                                         >
-                                            <p class="text-xs font-bold uppercase tracking-widest text-amber-500/70 dark:text-amber-400/70 mb-1">
+                                            <p class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-amber-500/70 dark:text-amber-400/70 mb-0.5 sm:mb-1">
                                                 {event.year}
                                             </p>
-                                            <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">
+                                            <h3 class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white mb-1 sm:mb-2">
                                                 {event.title}
                                             </h3>
-                                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
                                                 {event.description}
                                             </p>
                                         </div>
@@ -150,17 +150,17 @@ export default function History() {
                     </div>
                 </div>
 
-                <div class="text-center mb-10 sm:mb-16">
+                <div class="text-center mb-5 sm:mb-16">
                     <h2
                         id="faq-heading"
-                        class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4"
+                        class="text-xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4"
                     >
                         Yeah, but...
                     </h2>
                 </div>
 
                 <div
-                    class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 max-w-5xl mx-auto"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-6 max-w-5xl mx-auto"
                     role="list"
                     aria-labelledby="faq-heading"
                 >
@@ -168,18 +168,18 @@ export default function History() {
                         {(faq) => (
                             <div
                                 role="listitem"
-                                class="rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-4 sm:p-6 hover:border-indigo-300 dark:hover:border-indigo-500/20 transition-colors"
+                                class="rounded-xl sm:rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-3 sm:p-6 hover:border-indigo-300 dark:hover:border-indigo-500/20 transition-colors"
                             >
-                                <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-3 flex items-start gap-3">
+                                <h3 class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white mb-1.5 sm:mb-3 flex items-start gap-2 sm:gap-3">
                                     <span
-                                        class="shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 text-xs font-bold mt-0.5"
+                                        class="shrink-0 flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-indigo-100 dark:bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 text-[10px] sm:text-xs font-bold mt-0.5"
                                         aria-hidden="true"
                                     >
                                         ?
                                     </span>
                                     {faq.question}
                                 </h3>
-                                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed pl-9">
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed pl-7 sm:pl-9">
                                     {faq.answer}
                                 </p>
                             </div>
@@ -189,12 +189,12 @@ export default function History() {
 
                 <aside
                     aria-label="Key fact: Kodak's 61-year use of the calendar"
-                    class="mt-12 sm:mt-20 mx-auto max-w-3xl rounded-2xl border border-amber-200 dark:border-amber-500/20 bg-amber-50 dark:bg-amber-500/3 p-6 sm:p-8 md:p-10 text-center transition-colors duration-500"
+                    class="mt-8 sm:mt-20 mx-auto max-w-3xl rounded-xl sm:rounded-2xl border border-amber-200 dark:border-amber-500/20 bg-amber-50 dark:bg-amber-500/3 p-4 sm:p-8 md:p-10 text-center transition-colors duration-500"
                 >
-                    <h3 class="text-xl font-bold text-amber-700 dark:text-amber-200 mb-3">
+                    <h3 class="text-base sm:text-xl font-bold text-amber-700 dark:text-amber-200 mb-2 sm:mb-3">
                         Kodak used this for 61 years
                     </h3>
-                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl mx-auto">
+                    <p class="text-xs sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl mx-auto">
                         From 1928 to 1989, Eastman Kodak ran payroll,
                         accounting, and planning on 13 months internally. It
                         wasn't a theory — it was their actual system, and it

@@ -50,19 +50,19 @@ export default function HowItWorks() {
         <section
             id="why"
             aria-labelledby="how-it-works-heading"
-            class="relative bg-stone-50 dark:bg-slate-900 py-16 sm:py-24 md:py-32 px-4 transition-colors duration-500"
+            class="relative bg-stone-50 dark:bg-slate-900 py-10 sm:py-24 md:py-32 px-4 transition-colors duration-500"
         >
             <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-indigo-400/50 dark:via-indigo-500/50 to-transparent" />
 
             <div class="mx-auto max-w-6xl">
-                <div class="text-center mb-12 sm:mb-20">
+                <div class="text-center mb-6 sm:mb-20">
                     <h2
                         id="how-it-works-heading"
-                        class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-3 sm:mb-4"
+                        class="text-xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2 sm:mb-4"
                     >
                         The whole idea in 30 seconds
                     </h2>
-                    <p class="max-w-2xl mx-auto text-sm sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
+                    <p class="max-w-2xl mx-auto text-xs sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
                         Take the 365 days in a year. Divide them into 13 months
                         of 28 days. That's 364. The leftover day is a holiday
                         that doesn't belong to any month or week. Done.
@@ -70,34 +70,34 @@ export default function HowItWorks() {
                 </div>
 
                 <div
-                    class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-16 sm:mb-24"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-6 mb-8 sm:mb-24"
                     role="list"
                 >
                     <For each={cards}>
                         {(card) => (
                             <div
                                 role="listitem"
-                                class="rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-4 sm:p-6 md:p-8 transition-colors duration-500"
+                                class="rounded-xl sm:rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-3 sm:p-6 md:p-8 transition-colors duration-500"
                             >
                                 {card.icon ? (
-                                    <div class="flex items-start gap-3 mb-2">
+                                    <div class="flex items-start gap-2 sm:gap-3 mb-1 sm:mb-2">
                                         <span
-                                            class="text-2xl leading-none shrink-0 mt-0.5"
+                                            class="text-lg sm:text-2xl leading-none shrink-0 mt-0.5"
                                             aria-hidden="true"
                                         >
                                             {card.icon}
                                         </span>
-                                        <h3 class="text-lg font-semibold text-slate-900 dark:text-white">
+                                        <h3 class="text-sm sm:text-lg font-semibold text-slate-900 dark:text-white">
                                             {card.title}
                                         </h3>
                                     </div>
                                 ) : (
-                                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                                    <h3 class="text-sm sm:text-lg font-semibold text-slate-900 dark:text-white mb-1 sm:mb-2">
                                         {card.title}
                                     </h3>
                                 )}
                                 <p
-                                    class={`text-sm text-slate-500 dark:text-slate-400 leading-relaxed ${card.icon ? "pl-9" : ""}`}
+                                    class={`text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed ${card.icon ? "pl-7 sm:pl-9" : ""}`}
                                 >
                                     {card.description}
                                 </p>
@@ -106,37 +106,40 @@ export default function HowItWorks() {
                     </For>
                 </div>
 
-                <div class="text-center mb-8 sm:mb-10">
+                <div class="text-center mb-4 sm:mb-10">
                     <h3
                         id="month-template-heading"
-                        class="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2"
+                        class="text-base sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-1 sm:mb-2"
                     >
                         This is what every month looks like
                     </h3>
-                    <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">
+                    <p class="text-slate-500 dark:text-slate-400 text-[10px] sm:text-sm">
                         All 13 of them. Exactly the same. No exceptions.
                     </p>
                 </div>
 
                 <div
-                    class="mx-auto max-w-sm rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-white/3 p-4 sm:p-6 md:p-8 backdrop-blur-sm mb-10 sm:mb-16 transition-colors duration-500"
+                    class="mx-auto max-w-sm rounded-xl sm:rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-white/3 p-3 sm:p-6 md:p-8 backdrop-blur-sm mb-8 sm:mb-16 transition-colors duration-500"
                     role="table"
                     aria-labelledby="month-template-heading"
                 >
-                    <div class="grid grid-cols-7 gap-1 mb-2" role="row">
+                    <div
+                        class="grid grid-cols-7 gap-0.5 sm:gap-1 mb-1 sm:mb-2"
+                        role="row"
+                    >
                         <For each={weekdays}>
                             {(day) => (
-                                <div class="text-center text-xs font-medium text-slate-400 dark:text-slate-500 py-1">
+                                <div class="text-center text-[10px] sm:text-xs font-medium text-slate-400 dark:text-slate-500 py-0.5 sm:py-1">
                                     {day}
                                 </div>
                             )}
                         </For>
                     </div>
-                    <div class="grid grid-cols-7 gap-1">
+                    <div class="grid grid-cols-7 gap-0.5 sm:gap-1">
                         <For each={Array.from({ length: 28 }, (_, i) => i + 1)}>
                             {(day) => (
                                 <div
-                                    class={`flex items-center justify-center rounded-lg text-sm h-10 transition-colors ${
+                                    class={`flex items-center justify-center rounded sm:rounded-lg text-xs sm:text-sm h-7 sm:h-10 transition-colors ${
                                         day % 7 === 0
                                             ? "text-indigo-500 dark:text-indigo-400/70 bg-indigo-50 dark:bg-indigo-500/5"
                                             : day % 7 === 1
@@ -149,25 +152,25 @@ export default function HowItWorks() {
                             )}
                         </For>
                     </div>
-                    <p class="text-center text-xs text-slate-400 dark:text-slate-600 mt-4">
+                    <p class="text-center text-[10px] sm:text-xs text-slate-400 dark:text-slate-600 mt-2 sm:mt-4">
                         4 weeks. Always starts Sunday. Always ends Saturday.
                     </p>
                 </div>
 
-                <div class="text-center mb-4 sm:mb-6">
+                <div class="text-center mb-3 sm:mb-6">
                     <h3
                         id="full-year-heading"
-                        class="text-lg sm:text-xl font-semibold text-slate-900 dark:text-white mb-1"
+                        class="text-sm sm:text-xl font-semibold text-slate-900 dark:text-white mb-0.5 sm:mb-1"
                     >
                         The full year
                     </h3>
-                    <p class="text-sm text-slate-400 dark:text-slate-500">
+                    <p class="text-[10px] sm:text-sm text-slate-400 dark:text-slate-500">
                         364 regular days + Year Day (+ Leap Day some years)
                     </p>
                 </div>
 
                 <div
-                    class="flex flex-wrap justify-center gap-2 sm:gap-3"
+                    class="flex flex-wrap justify-center gap-1.5 sm:gap-3"
                     role="list"
                     aria-labelledby="full-year-heading"
                 >
@@ -175,19 +178,19 @@ export default function HowItWorks() {
                         {(month, i) => (
                             <div
                                 role="listitem"
-                                class={`rounded-xl border px-3 py-2 sm:px-4 sm:py-3 text-center transition-all hover:scale-105 ${
+                                class={`rounded-lg sm:rounded-xl border px-2 py-1.5 sm:px-4 sm:py-3 text-center transition-all hover:scale-105 ${
                                     month === "Sol"
                                         ? "border-amber-300 dark:border-amber-500/40 bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-300 shadow-lg shadow-amber-500/5"
                                         : "border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 text-slate-700 dark:text-slate-300 hover:border-indigo-300 dark:hover:border-indigo-500/20"
                                 }`}
                             >
-                                <p class="text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-0.5">
+                                <p class="text-[8px] sm:text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-0.5">
                                     {i() + 1}
                                 </p>
-                                <p class="text-xs sm:text-sm font-medium">
+                                <p class="text-[10px] sm:text-sm font-medium">
                                     {month}
                                 </p>
-                                <p class="text-[10px] text-slate-400 dark:text-slate-600">
+                                <p class="text-[8px] sm:text-[10px] text-slate-400 dark:text-slate-600">
                                     28 days
                                 </p>
                             </div>
@@ -195,15 +198,17 @@ export default function HowItWorks() {
                     </For>
                     <div
                         role="listitem"
-                        class="rounded-xl border border-emerald-300 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/10 px-3 py-2 sm:px-4 sm:py-3 text-center"
+                        class="rounded-lg sm:rounded-xl border border-emerald-300 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1.5 sm:px-4 sm:py-3 text-center"
                     >
-                        <p class="text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-0.5">
+                        <p class="text-[8px] sm:text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-0.5">
                             +
                         </p>
-                        <p class="text-xs sm:text-sm font-medium text-emerald-600 dark:text-emerald-300">
+                        <p class="text-[10px] sm:text-sm font-medium text-emerald-600 dark:text-emerald-300">
                             Year Day
                         </p>
-                        <p class="text-[10px] text-emerald-500/60">1 day</p>
+                        <p class="text-[8px] sm:text-[10px] text-emerald-500/60">
+                            1 day
+                        </p>
                     </div>
                 </div>
             </div>

@@ -62,11 +62,12 @@ export default function DateConverter() {
                         id="converter-heading"
                         class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4"
                     >
-                        Translate between calendars
+                        When is your birthday, really?
                     </h2>
                     <p class="max-w-xl mx-auto text-slate-500 dark:text-slate-400 leading-relaxed">
-                        Pick any date in the Gregorian calendar and see what it
-                        looks like in the 13-month system — or go the other way.
+                        Plug in any date — your birthday, your mom's, an
+                        anniversary — and see what it looks like in the 13-month
+                        calendar.
                     </p>
                 </div>
 

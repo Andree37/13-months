@@ -6,7 +6,8 @@ const VOTER_PREFIX = "13months:voter:";
 const RATE_LIMIT_PREFIX = "13months:rl:";
 const RATE_LIMIT_MAX = 10;
 const RATE_LIMIT_WINDOW_SECONDS = 60;
-const NUM_OPTIONS = 5;
+const NUM_OPTIONS = 4;
+const OLD_NUM_OPTIONS = 5;
 
 function getRedis() {
     return new Redis({
@@ -49,10 +50,34 @@ async function checkRateLimit(
 
 async function getVotes(redis: Redis): Promise<number[]> {
     const votes = await redis.get<number[]>(VOTES_KEY);
-    if (Array.isArray(votes) && votes.length === NUM_OPTIONS) {
-        return votes;
+    if (Array.isArray(votes)) {
+        if (votes.length === NUM_OPTIONS) {
+            return votes;
+        }
+        // Migrate from old 5-option format to new 4-option format
+        // Old order: Terrible(0), Bad(1), Okay(2), Good(3), Love it(4)
+        // New order: Love it(0), Good(1), Meh(2), Hate it(3)
+        if (votes.length === OLD_NUM_OPTIONS) {
+            const migrated = [
+                votes[4] ?? 0, // Love it
+                votes[3] ?? 0, // Good
+                (votes[1] ?? 0) + (votes[2] ?? 0), // Bad + Okay -> Meh
+                votes[0] ?? 0, // Terrible -> Hate it
+            ];
+            // Persist the migrated votes
+            await redis.set(VOTES_KEY, migrated);
+            return migrated;
+        }
     }
     return new Array(NUM_OPTIONS).fill(0);
+}
+
+// Remap a user's old vote index (0-4) to the new index (0-3)
+function migrateUserVote(oldIndex: number): number {
+    // Old: Terrible(0), Bad(1), Okay(2), Good(3), Love it(4)
+    // New: Love it(0), Good(1), Meh(2), Hate it(3)
+    const mapping: Record<number, number> = { 0: 3, 1: 2, 2: 2, 3: 1, 4: 0 };
+    return mapping[oldIndex] ?? 0;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -84,15 +109,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // ── GET ─────────────────────────────────────────────────────
     if (req.method === "GET") {
         try {
-            const [votes, userVote] = await Promise.all([
+            const [votes, rawUserVote] = await Promise.all([
                 getVotes(redis),
                 redis.get<number>(`${VOTER_PREFIX}${ip}`),
             ]);
 
-            return res.status(200).json({
-                votes,
-                userVote: typeof userVote === "number" ? userVote : null,
-            });
+            let userVote: number | null = null;
+            if (typeof rawUserVote === "number") {
+                if (rawUserVote >= NUM_OPTIONS) {
+                    // Old format vote — migrate it
+                    userVote = migrateUserVote(rawUserVote);
+                    await redis.set(`${VOTER_PREFIX}${ip}`, userVote);
+                } else {
+                    userVote = rawUserVote;
+                }
+            }
+
+            return res.status(200).json({ votes, userVote });
         } catch (err) {
             console.error("Failed to fetch votes:", err);
             return res.status(500).json({ error: "Failed to fetch votes" });
