@@ -97,7 +97,7 @@ export default function FeedbackRating() {
                 }
             }
         } catch {
-            // If API is unreachable, votes stay at zero
+            // API unreachable — votes stay at zero until next load
         } finally {
             setLoading(false);
         }
@@ -105,13 +105,28 @@ export default function FeedbackRating() {
 
     const totalVotes = () => votes().reduce((a, b) => a + b, 0);
     const maxVotes = () => Math.max(...votes(), 1);
+    const disabled = () => submitting() || rateLimited();
+
+    function revertOptimistic(
+        optimistic: number[],
+        index: number,
+        previousVote: number | null,
+    ) {
+        const reverted = [...optimistic];
+        reverted[index]--;
+        if (previousVote !== null && previousVote >= 0) {
+            reverted[previousVote]++;
+        }
+        setVotes(reverted);
+        setUserVote(previousVote);
+    }
 
     async function handleVote(index: number) {
-        if (submitting() || rateLimited()) return;
+        if (disabled()) return;
 
-        // Optimistic update
         const previousVote = userVote();
-        const optimistic = [...votes()];
+        const snapshot = [...votes()];
+        const optimistic = [...snapshot];
         if (
             previousVote !== null &&
             previousVote >= 0 &&
@@ -127,7 +142,6 @@ export default function FeedbackRating() {
         setJustVoted(true);
         setTimeout(() => setJustVoted(false), 2000);
 
-        // Send to API — server tracks previousVote by IP, we only send the new index
         setSubmitting(true);
         try {
             const res = await fetch("/api/votes", {
@@ -138,27 +152,10 @@ export default function FeedbackRating() {
 
             if (res.status === 429) {
                 const data = await res.json();
-                setRateLimited(true);
                 const resetIn = data.retryAfter ?? 60;
+                setRateLimited(true);
                 setError(`Too many requests. Try again in ${resetIn}s.`);
-
-                // Revert optimistic update
-                setVotes(
-                    previousVote !== null
-                        ? (() => {
-                              const reverted = [...optimistic];
-                              reverted[index]--;
-                              if (previousVote >= 0) reverted[previousVote]++;
-                              return reverted;
-                          })()
-                        : (() => {
-                              const reverted = [...optimistic];
-                              reverted[index]--;
-                              return reverted;
-                          })(),
-                );
-                setUserVote(previousVote);
-
+                revertOptimistic(optimistic, index, previousVote);
                 setTimeout(() => {
                     setRateLimited(false);
                     setError(null);
@@ -179,7 +176,7 @@ export default function FeedbackRating() {
                 }
             }
         } catch {
-            // Optimistic update stays — next page load will resync from server
+            // Optimistic update stays — next page load will resync
         } finally {
             setSubmitting(false);
         }
@@ -208,7 +205,6 @@ export default function FeedbackRating() {
                 </div>
 
                 <div class="rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-6 sm:p-8 transition-colors duration-500">
-                    {/* Emoji buttons */}
                     <div
                         class="flex items-center justify-center gap-2 sm:gap-4 mb-8"
                         role="radiogroup"
@@ -224,23 +220,22 @@ export default function FeedbackRating() {
                                         aria-checked={isSelected()}
                                         aria-label={`${option.label} — ${votes()[i()]} votes`}
                                         onClick={() => handleVote(i())}
-                                        disabled={submitting() || rateLimited()}
+                                        disabled={disabled()}
                                         class={`group relative flex flex-col items-center gap-1.5 rounded-xl border px-3 py-3 sm:px-5 sm:py-4 transition-all duration-200 select-none ${
-                                            submitting() || rateLimited()
+                                            disabled()
                                                 ? "opacity-60 cursor-not-allowed"
                                                 : "cursor-pointer"
                                         } ${
                                             isSelected()
                                                 ? `${option.borderColor} ${option.darkBorderColor} ${option.bgColor} ${option.darkBgColor} scale-110 shadow-lg`
-                                                : `border-transparent ${submitting() || rateLimited() ? "" : option.hoverColor + " hover:scale-105"}`
+                                                : `border-transparent ${disabled() ? "" : option.hoverColor + " hover:scale-105"}`
                                         }`}
                                     >
                                         <span
                                             class={`text-3xl sm:text-4xl transition-transform duration-200 ${
                                                 isSelected()
                                                     ? "scale-110"
-                                                    : submitting() ||
-                                                        rateLimited()
+                                                    : disabled()
                                                       ? ""
                                                       : "group-hover:scale-110"
                                             }`}
@@ -263,7 +258,6 @@ export default function FeedbackRating() {
                         </For>
                     </div>
 
-                    {/* Vote count bar chart */}
                     <div
                         class={`space-y-2.5 transition-opacity duration-300 ${loading() ? "opacity-40" : "opacity-100"}`}
                     >
@@ -326,7 +320,6 @@ export default function FeedbackRating() {
                         </For>
                     </div>
 
-                    {/* Total, status, and error messages */}
                     <div class="mt-6 flex items-center justify-between text-xs text-slate-400 dark:text-slate-500">
                         <span>
                             {loading() ? (

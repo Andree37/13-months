@@ -58,8 +58,6 @@ export function fromIFC(year: number, monthNumber: number, day: number): Date {
     const leap = isLeapYear(year);
     let doy = (monthNumber - 1) * 28 + day;
 
-    // If the IFC day-of-year falls on or after where Leap Day sits (doy 169),
-    // shift forward by one to account for the intercalary Leap Day.
     if (leap && doy >= 169) {
         doy += 1;
     }

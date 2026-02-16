@@ -33,24 +33,22 @@ export default function Hero() {
             aria-label="Today's date in the International Fixed Calendar"
             class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-linear-to-b from-stone-100 via-stone-50 to-stone-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-white px-4 transition-colors duration-500"
         >
-            {/* Single card comparison */}
-            <div class="w-full max-w-5xl rounded-3xl border border-stone-200 dark:border-white/10 bg-stone-50 dark:bg-white/3 p-8 sm:p-12 md:p-16 mb-8 sm:mb-10">
-                <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-6 sm:gap-10 md:gap-14">
-                    {/* Your calendar */}
+            <div class="w-full max-w-5xl rounded-2xl sm:rounded-3xl border border-stone-200 dark:border-white/10 bg-stone-50 dark:bg-white/3 p-4 sm:p-10 md:p-16 mb-8 sm:mb-10">
+                <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-10 md:gap-14">
                     <div class="text-center">
-                        <p class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-4 sm:mb-6">
+                        <p class="text-[10px] sm:text-sm font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2 sm:mb-6">
                             Your calendar
                         </p>
-                        <p class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-700 dark:text-slate-300 leading-tight">
+                        <p class="text-lg sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-700 dark:text-slate-300 leading-tight">
                             {gregorianDay()}
                         </p>
-                        <p class="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-slate-600 dark:text-slate-300 mt-2 sm:mt-3">
+                        <p class="text-base sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-slate-600 dark:text-slate-300 mt-1 sm:mt-3">
                             {gregorianMonthDay()}
                         </p>
-                        <p class="text-base sm:text-lg md:text-xl text-slate-500 dark:text-slate-400 mt-1 sm:mt-2">
+                        <p class="text-xs sm:text-lg md:text-xl text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-2">
                             {gregorianYear()}
                         </p>
-                        <p class="mt-4 sm:mt-6 text-sm sm:text-base text-slate-400 dark:text-slate-500">
+                        <p class="mt-2 sm:mt-6 text-[10px] sm:text-base text-slate-400 dark:text-slate-500">
                             <span class="tabular-nums font-semibold text-slate-600 dark:text-slate-300">
                                 {gregorianMonthLength()}
                             </span>{" "}
@@ -58,7 +56,6 @@ export default function Hero() {
                         </p>
                     </div>
 
-                    {/* Divider */}
                     <div class="flex flex-col items-center gap-2 self-stretch">
                         <div class="flex-1 w-px bg-linear-to-b from-transparent via-stone-300 dark:via-white/10 to-transparent" />
                         <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
@@ -67,29 +64,28 @@ export default function Hero() {
                         <div class="flex-1 w-px bg-linear-to-b from-transparent via-stone-300 dark:via-white/10 to-transparent" />
                     </div>
 
-                    {/* The best calendar */}
                     <div class="text-center">
-                        <p class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-400 mb-4 sm:mb-6">
+                        <p class="text-[10px] sm:text-sm font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-400 mb-2 sm:mb-6">
                             International Fixed Calendar
                         </p>
                         {ifcDate().isYearDay || ifcDate().isLeapDay ? (
-                            <p class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-linear-to-r from-amber-500 to-orange-500 dark:from-amber-400 dark:to-orange-400 bg-clip-text text-transparent leading-tight">
+                            <p class="text-lg sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-linear-to-r from-amber-500 to-orange-500 dark:from-amber-400 dark:to-orange-400 bg-clip-text text-transparent leading-tight">
                                 {ifcDate().isYearDay ? "Year Day" : "Leap Day"}
                             </p>
                         ) : (
                             <>
-                                <p class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-linear-to-r from-indigo-500 via-violet-500 to-purple-500 dark:from-indigo-400 dark:via-violet-400 dark:to-purple-400 bg-clip-text text-transparent leading-tight">
+                                <p class="text-lg sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-linear-to-r from-indigo-500 via-violet-500 to-purple-500 dark:from-indigo-400 dark:via-violet-400 dark:to-purple-400 bg-clip-text text-transparent leading-tight">
                                     {IFC_WEEKDAY_NAMES[ifcDate().weekday!]}
                                 </p>
-                                <p class="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-slate-900 dark:text-white mt-2 sm:mt-3">
+                                <p class="text-base sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-slate-900 dark:text-white mt-1 sm:mt-3">
                                     {ifcDate().monthName} {ifcDate().day}
                                 </p>
-                                <p class="text-base sm:text-lg md:text-xl text-slate-400 dark:text-slate-500 mt-1 sm:mt-2">
+                                <p class="text-xs sm:text-lg md:text-xl text-slate-400 dark:text-slate-500 mt-0.5 sm:mt-2">
                                     {ifcDate().year}
                                 </p>
                             </>
                         )}
-                        <p class="mt-4 sm:mt-6 text-sm sm:text-base text-indigo-400 dark:text-indigo-400/70">
+                        <p class="mt-2 sm:mt-6 text-[10px] sm:text-base text-indigo-400 dark:text-indigo-400/70">
                             <span class="tabular-nums font-semibold text-indigo-500 dark:text-indigo-300">
                                 28
                             </span>{" "}

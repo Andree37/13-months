@@ -6,13 +6,16 @@ html {
     scroll-behavior: smooth;
 }
 
+html.dark {
+    background-color: #020617;
+}
+
 body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar — light mode */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -30,7 +33,6 @@ body {
     background: #a8a29e;
 }
 
-/* Scrollbar — dark mode */
 .dark ::-webkit-scrollbar-track,
 .dark::-webkit-scrollbar-track {
     background: #020617;
@@ -46,7 +48,6 @@ body {
     background: #334155;
 }
 
-/* Focus-visible — keyboard accessibility */
 *:focus-visible {
     outline: 2px solid #6366f1;
     outline-offset: 2px;
@@ -57,19 +58,16 @@ body {
     outline-color: #818cf8;
 }
 
-/* Remove default focus ring for mouse users */
 *:focus:not(:focus-visible) {
     outline: none;
 }
 
-/* Interactive elements — smooth focus transition */
 a:focus-visible,
 button:focus-visible {
     transition: outline-offset 0.15s ease;
     outline-offset: 3px;
 }
 
-/* Selection color */
 ::selection {
     background-color: rgba(99, 102, 241, 0.3);
     color: white;

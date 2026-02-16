@@ -66,6 +66,13 @@
         />
     </head>
     <body>
+        <script>
+            (function () {
+                var h = new Date().getHours();
+                if (h < 7 || h >= 19)
+                    document.documentElement.classList.add("dark");
+            })();
+        </script>
         <div id="root"></div>
         <script type="module" src="/src/index.tsx"></script>
     </body>

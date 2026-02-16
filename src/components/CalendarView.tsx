@@ -28,28 +28,28 @@ export default function CalendarView() {
         <section
             id="calendar"
             aria-labelledby="calendar-heading"
-            class="relative bg-stone-50 dark:bg-slate-950 py-24 sm:py-32 px-4 transition-colors duration-500"
+            class="relative bg-stone-50 dark:bg-slate-950 py-16 sm:py-24 md:py-32 px-4 transition-colors duration-500"
         >
             <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-violet-400/50 dark:via-violet-500/50 to-transparent" />
 
             <div class="mx-auto max-w-7xl">
-                <div class="text-center mb-12">
-                    <p class="text-sm font-semibold uppercase tracking-widest text-emerald-500 dark:text-emerald-400 mb-3 select-none">
+                <div class="text-center mb-8 sm:mb-12">
+                    <p class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-emerald-500 dark:text-emerald-400 mb-2 sm:mb-3 select-none">
                         Full Calendar
                     </p>
                     <h2
                         id="calendar-heading"
-                        class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4"
+                        class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-3 sm:mb-4"
                     >
                         {year()} at a glance
                     </h2>
-                    <p class="max-w-2xl mx-auto text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
+                    <p class="max-w-2xl mx-auto text-sm sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
                         All 13 months laid out — each one identical, each one
                         perfectly predictable.
                     </p>
                 </div>
 
-                <div class="flex items-center justify-center gap-4 mb-12">
+                <div class="flex items-center justify-center gap-4 mb-8 sm:mb-12">
                     <button
                         onClick={() => setYear((y) => y - 1)}
                         class="flex items-center justify-center w-10 h-10 rounded-full border border-stone-200 dark:border-white/10 bg-stone-200 dark:bg-white/5 text-slate-600 dark:text-slate-300 transition-all hover:bg-stone-300 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white hover:border-stone-300 dark:hover:border-white/20"

@@ -17,20 +17,15 @@ export default function DateConverter() {
     const pad = (n: number) => String(n).padStart(2, "0");
     const todayStr = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
 
-    // Gregorian → IFC state
     const [gregInput, setGregInput] = createSignal(todayStr);
-
-    // IFC → Gregorian state
     const [ifcYear, setIfcYear] = createSignal(today.getFullYear());
     const [ifcMonth, setIfcMonth] = createSignal(1);
     const [ifcDay, setIfcDay] = createSignal(1);
     const [ifcSpecial, setIfcSpecial] = createSignal<
         "none" | "yearday" | "leapday"
     >("none");
-
     const [direction, setDirection] = createSignal<Direction>("greg-to-ifc");
 
-    // Gregorian → IFC conversion
     const gregDate = () => {
         const parts = gregInput().split("-");
         if (parts.length !== 3) return null;
@@ -45,15 +40,9 @@ export default function DateConverter() {
         return toIFC(d);
     };
 
-    // IFC → Gregorian conversion
     const gregResult = () => {
-        if (ifcSpecial() === "yearday") {
-            return fromIFCYearDay(ifcYear());
-        }
-        if (ifcSpecial() === "leapday") {
-            const d = fromIFCLeapDay(ifcYear());
-            return d;
-        }
+        if (ifcSpecial() === "yearday") return fromIFCYearDay(ifcYear());
+        if (ifcSpecial() === "leapday") return fromIFCLeapDay(ifcYear());
         return fromIFC(ifcYear(), ifcMonth(), ifcDay());
     };
 
@@ -81,7 +70,6 @@ export default function DateConverter() {
                     </p>
                 </div>
 
-                {/* Direction toggle */}
                 <div class="flex items-center justify-center mb-10">
                     <div class="inline-flex rounded-full border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-white/5 p-1 gap-1">
                         <button
@@ -109,11 +97,9 @@ export default function DateConverter() {
                     </div>
                 </div>
 
-                {/* Converter card */}
                 <div class="rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-6 sm:p-8 transition-colors duration-500">
                     <Show when={direction() === "greg-to-ifc"}>
                         <div class="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] gap-6 items-center">
-                            {/* Input side */}
                             <div>
                                 <label
                                     for="greg-date-input"
@@ -137,7 +123,6 @@ export default function DateConverter() {
                                 </Show>
                             </div>
 
-                            {/* Arrow */}
                             <div class="flex items-center justify-center">
                                 <div class="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 flex items-center justify-center">
                                     <svg
@@ -157,7 +142,6 @@ export default function DateConverter() {
                                 </div>
                             </div>
 
-                            {/* Result side */}
                             <div>
                                 <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">
                                     IFC date
@@ -233,14 +217,12 @@ export default function DateConverter() {
 
                     <Show when={direction() === "ifc-to-greg"}>
                         <div class="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] gap-6 items-center">
-                            {/* Input side */}
                             <div>
                                 <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">
                                     IFC date
                                 </p>
 
                                 <div class="space-y-3">
-                                    {/* Year */}
                                     <div>
                                         <label
                                             for="ifc-year"
@@ -255,20 +237,13 @@ export default function DateConverter() {
                                             max="9999"
                                             value={ifcYear()}
                                             onInput={(e) => {
-                                                setIfcYear(
+                                                const parsed =
                                                     parseInt(
                                                         e.currentTarget.value,
-                                                    ) || today.getFullYear(),
-                                                );
-                                                // Reset leap day selection if not a leap year
+                                                    ) || today.getFullYear();
+                                                setIfcYear(parsed);
                                                 if (
-                                                    !isLeapYear(
-                                                        parseInt(
-                                                            e.currentTarget
-                                                                .value,
-                                                        ) ||
-                                                            today.getFullYear(),
-                                                    ) &&
+                                                    !isLeapYear(parsed) &&
                                                     ifcSpecial() === "leapday"
                                                 ) {
                                                     setIfcSpecial("none");
@@ -278,7 +253,6 @@ export default function DateConverter() {
                                         />
                                     </div>
 
-                                    {/* Special day toggle */}
                                     <div class="flex items-center gap-2 flex-wrap">
                                         <button
                                             type="button"
@@ -324,7 +298,6 @@ export default function DateConverter() {
                                     </div>
 
                                     <Show when={ifcSpecial() === "none"}>
-                                        {/* Month */}
                                         <div>
                                             <label
                                                 for="ifc-month"
@@ -355,7 +328,6 @@ export default function DateConverter() {
                                             </select>
                                         </div>
 
-                                        {/* Day */}
                                         <div>
                                             <label
                                                 for="ifc-day"
@@ -391,7 +363,6 @@ export default function DateConverter() {
                                 </div>
                             </div>
 
-                            {/* Arrow */}
                             <div class="flex items-center justify-center">
                                 <div class="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 flex items-center justify-center">
                                     <svg
@@ -411,7 +382,6 @@ export default function DateConverter() {
                                 </div>
                             </div>
 
-                            {/* Result side */}
                             <div>
                                 <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">
                                     Gregorian date
@@ -482,7 +452,6 @@ export default function DateConverter() {
                     </Show>
                 </div>
 
-                {/* Fun fact */}
                 <div class="mt-6 text-center">
                     <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed max-w-md mx-auto">
                         <span class="font-medium text-slate-500 dark:text-slate-400">

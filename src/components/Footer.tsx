@@ -21,11 +21,9 @@ export default function Footer() {
                 setTimeout(() => setShareStatus("idle"), 2500);
             }
         } catch (err: unknown) {
-            // User cancelled share dialog — not an error
             if (err instanceof DOMException && err.name === "AbortError")
                 return;
 
-            // Fallback: try clipboard
             try {
                 await navigator.clipboard.writeText(window.location.href);
                 setShareStatus("copied");

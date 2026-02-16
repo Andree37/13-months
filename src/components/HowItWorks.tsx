@@ -50,19 +50,19 @@ export default function HowItWorks() {
         <section
             id="why"
             aria-labelledby="how-it-works-heading"
-            class="relative bg-stone-50 dark:bg-slate-900 py-24 sm:py-32 px-4 transition-colors duration-500"
+            class="relative bg-stone-50 dark:bg-slate-900 py-16 sm:py-24 md:py-32 px-4 transition-colors duration-500"
         >
             <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-indigo-400/50 dark:via-indigo-500/50 to-transparent" />
 
             <div class="mx-auto max-w-6xl">
-                <div class="text-center mb-20">
+                <div class="text-center mb-12 sm:mb-20">
                     <h2
                         id="how-it-works-heading"
-                        class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4"
+                        class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-3 sm:mb-4"
                     >
                         The whole idea in 30 seconds
                     </h2>
-                    <p class="max-w-2xl mx-auto text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
+                    <p class="max-w-2xl mx-auto text-sm sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
                         Take the 365 days in a year. Divide them into 13 months
                         of 28 days. That's 364. The leftover day is a holiday
                         that doesn't belong to any month or week. Done.
@@ -70,14 +70,14 @@ export default function HowItWorks() {
                 </div>
 
                 <div
-                    class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-16 sm:mb-24"
                     role="list"
                 >
                     <For each={cards}>
                         {(card) => (
                             <div
                                 role="listitem"
-                                class="rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-6 sm:p-8 transition-colors duration-500"
+                                class="rounded-2xl border border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/2 p-4 sm:p-6 md:p-8 transition-colors duration-500"
                             >
                                 {card.icon ? (
                                     <div class="flex items-start gap-3 mb-2">
@@ -106,20 +106,20 @@ export default function HowItWorks() {
                     </For>
                 </div>
 
-                <div class="text-center mb-10">
+                <div class="text-center mb-8 sm:mb-10">
                     <h3
                         id="month-template-heading"
-                        class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2"
+                        class="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2"
                     >
                         This is what every month looks like
                     </h3>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm">
+                    <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">
                         All 13 of them. Exactly the same. No exceptions.
                     </p>
                 </div>
 
                 <div
-                    class="mx-auto max-w-sm rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-white/3 p-6 sm:p-8 backdrop-blur-sm mb-16 transition-colors duration-500"
+                    class="mx-auto max-w-sm rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-white/3 p-4 sm:p-6 md:p-8 backdrop-blur-sm mb-10 sm:mb-16 transition-colors duration-500"
                     role="table"
                     aria-labelledby="month-template-heading"
                 >
@@ -154,10 +154,10 @@ export default function HowItWorks() {
                     </p>
                 </div>
 
-                <div class="text-center mb-6">
+                <div class="text-center mb-4 sm:mb-6">
                     <h3
                         id="full-year-heading"
-                        class="text-xl font-semibold text-slate-900 dark:text-white mb-1"
+                        class="text-lg sm:text-xl font-semibold text-slate-900 dark:text-white mb-1"
                     >
                         The full year
                     </h3>

@@ -16,9 +16,9 @@ function getRedis() {
 }
 
 function getClientIP(req: VercelRequest): string {
+    // x-forwarded-for can be a comma-separated list; first entry is the real client
     const forwarded = req.headers["x-forwarded-for"];
     if (typeof forwarded === "string") {
-        // x-forwarded-for can be a comma-separated list; first one is the real client
         return forwarded.split(",")[0].trim();
     }
     if (Array.isArray(forwarded)) {
@@ -32,10 +32,8 @@ async function checkRateLimit(
     ip: string,
 ): Promise<{ allowed: boolean; remaining: number; resetIn: number }> {
     const key = `${RATE_LIMIT_PREFIX}${ip}`;
-
     const count = await redis.incr(key);
 
-    // Set expiry only on first request in the window
     if (count === 1) {
         await redis.expire(key, RATE_LIMIT_WINDOW_SECONDS);
     }
@@ -83,7 +81,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         });
     }
 
-    // ── GET: fetch votes + caller's current vote ────────────────
+    // ── GET ─────────────────────────────────────────────────────
     if (req.method === "GET") {
         try {
             const [votes, userVote] = await Promise.all([
@@ -101,12 +99,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
     }
 
-    // ── POST: submit or change a vote ───────────────────────────
+    // ── POST ────────────────────────────────────────────────────
     if (req.method === "POST") {
         try {
             const { index } = req.body as { index: unknown };
 
-            // Validate
             if (
                 typeof index !== "number" ||
                 !Number.isInteger(index) ||
@@ -117,20 +114,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             }
 
             const voterKey = `${VOTER_PREFIX}${ip}`;
-
-            // Look up what this IP previously voted for — server is the source of truth
             const previousVote = await redis.get<number>(voterKey);
 
-            // If they're voting for the same thing, no-op
             if (typeof previousVote === "number" && previousVote === index) {
                 const votes = await getVotes(redis);
                 return res.status(200).json({ votes, userVote: index });
             }
 
-            // Get current tallies
             const votes = await getVotes(redis);
 
-            // Remove previous vote if it exists
             if (
                 typeof previousVote === "number" &&
                 previousVote >= 0 &&
@@ -139,10 +131,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 votes[previousVote] = Math.max(0, votes[previousVote] - 1);
             }
 
-            // Add new vote
             votes[index]++;
 
-            // Persist both atomically via pipeline
             const pipeline = redis.pipeline();
             pipeline.set(VOTES_KEY, votes);
             pipeline.set(voterKey, index);
