@@ -126,42 +126,30 @@ export default function HowItWorks() {
                     <div class="grid grid-cols-7 gap-1 mb-2" role="row">
                         <For each={weekdays}>
                             {(day) => (
+                                <div class="text-center text-xs font-medium text-slate-400 dark:text-slate-500 py-1">
+                                    {day}
+                                </div>
+                            )}
+                        </For>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1">
+                        <For each={Array.from({ length: 28 }, (_, i) => i + 1)}>
+                            {(day) => (
                                 <div
-                                    role="columnheader"
-                                    class="text-center text-xs font-medium text-slate-400 dark:text-slate-500 py-1"
+                                    class={`flex items-center justify-center rounded-lg text-sm h-10 transition-colors ${
+                                        day % 7 === 0
+                                            ? "text-indigo-500 dark:text-indigo-400/70 bg-indigo-50 dark:bg-indigo-500/5"
+                                            : day % 7 === 1
+                                              ? "text-violet-500 dark:text-violet-400/70 bg-violet-50 dark:bg-violet-500/5"
+                                              : "text-slate-700 dark:text-slate-300 hover:bg-stone-200 dark:hover:bg-white/5"
+                                    }`}
                                 >
                                     {day}
                                 </div>
                             )}
                         </For>
                     </div>
-                    <div class="grid grid-cols-7 gap-1" role="rowgroup">
-                        <For each={Array.from({ length: 28 }, (_, i) => i + 1)}>
-                            {(day) => {
-                                const isSaturday = day % 7 === 0;
-                                const isSunday = day % 7 === 1;
-                                return (
-                                    <div
-                                        role="cell"
-                                        aria-label={`Day ${day}, ${weekdays[(day - 1) % 7]}`}
-                                        class={`flex items-center justify-center rounded-lg text-sm h-10 transition-colors ${
-                                            isSaturday
-                                                ? "text-indigo-500 dark:text-indigo-400/70 bg-indigo-50 dark:bg-indigo-500/5"
-                                                : isSunday
-                                                  ? "text-violet-500 dark:text-violet-400/70 bg-violet-50 dark:bg-violet-500/5"
-                                                  : "text-slate-700 dark:text-slate-300 hover:bg-stone-200 dark:hover:bg-white/5"
-                                        }`}
-                                    >
-                                        {day}
-                                    </div>
-                                );
-                            }}
-                        </For>
-                    </div>
-                    <p
-                        class="text-center text-xs text-slate-400 dark:text-slate-600 mt-4"
-                        aria-hidden="true"
-                    >
+                    <p class="text-center text-xs text-slate-400 dark:text-slate-600 mt-4">
                         4 weeks. Always starts Sunday. Always ends Saturday.
                     </p>
                 </div>

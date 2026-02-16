@@ -1,4 +1,4 @@
-const IFC_MONTH_NAMES = [
+export const IFC_MONTH_NAMES = [
     "January",
     "February",
     "March",
@@ -46,6 +46,35 @@ export interface IFCDate {
 
 export function isLeapYear(year: number): boolean {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+
+function doyToGregorian(year: number, doy: number): Date {
+    const date = new Date(year, 0);
+    date.setDate(doy);
+    return date;
+}
+
+export function fromIFC(year: number, monthNumber: number, day: number): Date {
+    const leap = isLeapYear(year);
+    let doy = (monthNumber - 1) * 28 + day;
+
+    // If the IFC day-of-year falls on or after where Leap Day sits (doy 169),
+    // shift forward by one to account for the intercalary Leap Day.
+    if (leap && doy >= 169) {
+        doy += 1;
+    }
+
+    return doyToGregorian(year, doy);
+}
+
+export function fromIFCYearDay(year: number): Date {
+    const leap = isLeapYear(year);
+    return doyToGregorian(year, leap ? 366 : 365);
+}
+
+export function fromIFCLeapDay(year: number): Date | null {
+    if (!isLeapYear(year)) return null;
+    return doyToGregorian(year, 169);
 }
 
 function dayOfYear(date: Date): number {
